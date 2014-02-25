@@ -1,0 +1,50 @@
+.icono{
+	width: 50px;
+	height: 50px;
+	clear: both;
+	float: left;	
+}
+.brand, .brand:hover{
+	text-decoration: none;
+	color: #fff;
+	font-size: 22px;
+}
+.resultados{
+	margin-top: 55px;
+}
+.apk1{
+	padding: -15px;
+	width: 100%;
+	background: #dbdbdb;
+	margin-top: 5px;
+	height: 100px;
+	border-radius: 0px;
+}
+.apk{
+	padding: 10px;
+	width: 100%;
+	background: #dbdbdb;
+	margin-top: 5px;
+	height: 100px;
+	margin-left: 5px;
+	border-radius: 5px;
+}
+
+.descarga{
+	float: left;
+	margin-top: 10px;
+	width:35%;
+}
+.navbar-inverse{
+	background: rgb(57,179,215);
+	border-color: rgb(57,179,215);
+}
+.navbar-form{
+	border-color: rgb(255,255,255) !important;
+	padding: 0 0px;
+	margin: 5px 0px;
+}
+.go-back{
+	margin-top: 5px;
+	margin-left: 5px;
+}

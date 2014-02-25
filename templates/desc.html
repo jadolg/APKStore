@@ -1,0 +1,39 @@
+{% extends "main.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block cabezera %}
+        {{ block.super }}
+    {% endblock cabezera%}
+<body>
+    {% block navbar %}
+        {{ block.super }}
+    {% endblock navbar%}   
+    <div class="resultados" >
+        {% block error %}
+            {{ block.super }}
+        {% endblock error %}
+        {% block resultados %}
+            <b><center>Archivos adicionales</center></b>
+            <!--<div class="apk">
+                <label class="pull-left">{{ apk.0 }}</label>
+                <span class="label label-info pull-right">v{{apk.3}}</span>
+                <img src="/ico/{{ apk.1 }} " class="img-rounded icono"/>
+                <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ apk.2 }}"><i class="icon-download"></i>Descargar</a>
+            </div>-->
+            {% if rel|length > 0 %}
+                {% for file in rel%}
+                    <div class="apk">                
+                        <label class="pull-left">{{ file }}</label>
+                        <span class="label label-info pull-right">v{{apk.3}}</span>
+                        <img src="/static/file.png" class="img-rounded icono"/>
+                        <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
+                    </div>                 
+                {% endfor %}                    
+            {% endif %}
+
+            <a class="btn btn-info go-back" href="javascript:history.go(-1)" >Atrás</a>    
+        {% endblock resultados %}            
+    </div>
+</body>
+</html>

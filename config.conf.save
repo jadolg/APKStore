@@ -1,0 +1,4 @@
+[main]
+#path to the folder with all the apk files
+apk pool = /media/SHADOW_DATA/programs/RepoDroid
+
