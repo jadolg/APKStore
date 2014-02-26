@@ -79,8 +79,9 @@ def makeDirs():
 
 def cleanIcons():
     for i in listDir(OUTPUT+"/*.png"):
-        print 'removing ',i
-        os.remove(i)
+        if i != OUTPUT+"/no_icon.png":
+            print 'removing ',i
+            os.remove(i)
 
 def getData(afile):
     p = subprocess.Popen(['./aapt','d','badging',afile], stdout=subprocess.PIPE)
