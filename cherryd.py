@@ -26,6 +26,9 @@ import socket
 import urllib
 import urlparse
 import cherrypy
+from pydaemonlib.pydaemonlib import Daemon
+from sys import argv
+from sys import exit as Exit
 
 
 # Django settings
@@ -108,10 +111,7 @@ class DjangoApplication(object):
         """Run the CherryPy server."""
         from django.conf import settings
         from django.core.handlers.wsgi import WSGIHandler
-        #~ from translogger import TransLogger
- 
-        #~ host, port = urllib.splitnport(netloc, 80)
-        #~ host = socket.gethostbyname(host)
+
         cherrypy.config.update({
             'server.socket_host': host,
             'server.socket_port': port,
@@ -127,8 +127,6 @@ class DjangoApplication(object):
         self.cfg_assets(settings.ICONS_URL,settings.ICONS_ROOT)
         self.cfg_favicon(settings.STATIC_ROOT)
         app = WSGIHandler()
-        #~ app = TransLogger(app, logger_name='cherrypy.access',
-                          #~ setup_console_handler=False)
         if self.domains:
             app = cherrypy.wsgi.VirtualHost(app, self.domains)
         cherrypy.tree.graft(app)
@@ -139,7 +137,19 @@ class DjangoApplication(object):
 def main(**kwargs):
     app = DjangoApplication()
     app.run(**kwargs)
- 
+
+class server(Daemon):
+    def run(self):
+        main(host='0.0.0.0',port=8800)
+
  
 if __name__ == '__main__':
-    main(host='0.0.0.0',port=8800)
+    daemon = server('/tmp/apkstore.pid',)
+    if argv[1] == 'start':
+        daemon.start()
+    elif argv[1] == 'stop':
+        daemon.stop()
+    elif argv[1] == 'restart':
+        daemon.restart()
+    else:
+        Exit('Use: rcserver start|stop|restart')
