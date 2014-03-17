@@ -1,4 +1,5 @@
 #  urls.py
+# -*- coding: UTF-8 -*-
 #
 #  Copyright 2014 Jorge Alberto Díaz Orozco <jaorozco@estudiantes.uci.cu>
 #

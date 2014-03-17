@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 # Django settings for APKStore project.
 #  settings.py
 #
