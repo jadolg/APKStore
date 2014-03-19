@@ -1,29 +1,3 @@
-<!--
-   main.html
-
-   Copyright 2014
-   Jorge Alberto Díaz Orozco <jaorozco@estudiantes.uci.cu>
-   Manuel Alejandro Sánchez del Campo <madelcampo@estudiantes.uci.cu>
-   Carlos Osiel Rojas Velázquez <corojas@uci.cu>
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-   MA 02110-1301, USA.
-
-
--->
-
 {% extends "main.html" %}
 <!DOCTYPE html>
 <html>
@@ -35,7 +9,7 @@
     {% block navbar %}
         {{ block.super }}
     {% endblock navbar%}   
-    <div class="resultados" >
+    <div class="resultados" align="center" >
         {% block error %}
             {{ block.super }}
         {% endblock error %}
@@ -48,18 +22,46 @@
                 <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ apk.2 }}"><i class="icon-download"></i>Descargar</a>
             </div>-->
             {% if rel|length > 0 %}
+              <div class="well visible-phone">
                 {% for file in rel%}
-                    <div class="apk">                
+                    <div class="apk1">                
                         <label class="pull-left">{{ file }}</label>
                         <span class="label label-info pull-right">v{{apk.3}}</span>
                         <img src="/static/file.png" class="img-rounded icono"/>
                         <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
                     </div>                 
-                {% endfor %}                    
+                {% endfor %}
+               </div>
+              <div class="well visible-tablet">
+                {% for file in rel%}
+                  <div class="span6">
+                    <div class="apk">                
+                        <label class="pull-left">{{ file }}</label>
+                        <span class="label label-info pull-right">v{{apk.3}}</span>
+                        <img src="/static/file.png" class="img-rounded icono"/>
+                        <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
+                    </div>
+                   </div>                  
+                {% endfor %}
+               </div>
+              <div class="well visible-desktop">
+                {% for file in rel%}
+                  <div class="span4">
+                    <div class="apk">                
+                        <label class="pull-left">{{ file }}</label>
+                        <span class="label label-info pull-right">v{{apk.3}}</span>
+                        <img src="/static/file.png" class="img-rounded icono"/>
+                        <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
+                    </div> 
+                   </div>                 
+                {% endfor %}
+               </div>                      
             {% endif %}
-
-            <a class="btn btn-info go-back" href="javascript:history.go(-1)" >Atrás</a>    
-        {% endblock resultados %}            
+            </div>
+            <a class="btn btn-info go-back" align="center" style="margin-bottom: 25px;" href="javascript:history.go(-1)" >Atrás</a>    
+        {% endblock resultados %}  
+                 
     </div>
+
 </body>
 </html>

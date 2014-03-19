@@ -145,11 +145,14 @@ class server(Daemon):
  
 if __name__ == '__main__':
     daemon = server('/tmp/apkstore.pid',)
-    if argv[1] == 'start':
-        daemon.start()
-    elif argv[1] == 'stop':
-        daemon.stop()
-    elif argv[1] == 'restart':
-        daemon.restart()
+    if len(argv) == 2:
+        if argv[1] == 'start':
+            daemon.start()
+        elif argv[1] == 'stop':
+            daemon.stop()
+        elif argv[1] == 'restart':
+            daemon.restart()
+        else:
+            Exit('Use: rcserver start|stop|restart')
     else:
-        Exit('Use: rcserver start|stop|restart')
+        Exit('Invalid params number\nUse: rcserver start|stop|restart')
