@@ -152,10 +152,10 @@ def createDB():
         for i in k:
             theAPKdata = getData(i)
             if theAPKdata:
-                nombre = theAPKdata[0]
+                nombre = theAPKdata[0][:20]
                 icon = extractIcon(i,ind)
 
-                versionName = theAPKdata[2]
+                versionName = theAPKdata[2][:20]
                 version = theAPKdata[3]
 
                 data = (nombre,icon,i.replace(POOL[r],""),versionName,version,str(r),ind,getRelatives(i))
