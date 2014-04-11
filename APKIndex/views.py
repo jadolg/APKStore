@@ -20,14 +20,11 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 
-
-import sqlite3
-from os.path import exists
-
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
-from APKStore.settings import DB_URL
+import operator
+from models import apks
+from django.db.models import Q
 
 
 def main(request):
@@ -36,12 +33,24 @@ def main(request):
 def app(request,id):
     return aresponse(request,id)
 
+
+def search_keywords(apks, keywords):
+    if isinstance(keywords, str):
+        keywords = [keywords]
+
+    if not isinstance(keywords, list):
+        return None
+
+    nameSearch = [Q(nombre__icontains=x) for x in keywords]
+    pathSearch = [Q(ruta__icontains=x) for x in keywords]
+
+    final_q = reduce(operator.or_, nameSearch + pathSearch)
+    r_qs = apks.objects.filter(final_q)
+    return r_qs
+
+
 def aresponse(request,id=None):
     c = RequestContext(request)
-    DB = DB_URL
-
-    if not exists(DB):
-        raise Exception('no se encuentra la BD '+DB)
 
     from forms import SearchForm
     sform = SearchForm()
@@ -49,16 +58,14 @@ def aresponse(request,id=None):
     if request.method == 'GET' and not id:
         return render_to_response("main.html",{"err":False,"sform":sform},context_instance=c)
     elif request.method == 'GET':
-        database = sqlite3.connect(DB)
-        cursor  = database.cursor()
-        cursor.execute("select * from apks where id="+id)
-        apk = cursor.next();
-        rel = apk[7].split(":")
+        apk = apks.objects.get(ind=id)
+
+        rel = apk.relativo.split(":")
         if len(rel)>0:
             del rel[0]
         import os
-        dir = os.path.dirname(apk[2])
-        print apk
+        dir = os.path.dirname(apk.ruta)
+
         return render_to_response("desc.html",{"dir":dir,"rel":rel,"apk":apk,"err":False,"sform":sform},context_instance=c)
     elif request.method == 'POST':
         asearch = request.POST['asearch']
@@ -66,22 +73,9 @@ def aresponse(request,id=None):
         if len(searchp) == 0:
             return render_to_response("main.html",{"err":False,"sform":sform},context_instance=c)
 
-        database = sqlite3.connect(DB)
-        cursor  = database.cursor()
+        apk = search_keywords(apks,searchp)
 
-        q = "select * from apks where "
-        for i in searchp:
-            if i != searchp[-1]:
-                q += "nombre like '%"+i+"%' or ruta like'%"+i+"%' and "
-            else:
-                q += "nombre like '%"+i+"%' or ruta like'%"+i+"%' order by nombre, version"
-
-        cursor.execute(q)
-        copy = []
-        for i in cursor:
-            copy.append(i)
-
-        if len(copy) > 0:
-            return render_to_response("main.html",{"err":False,"cursor":copy,"sform":sform},context_instance=c)
+        if len(apk) > 0:
+            return render_to_response("main.html",{"err":False,"cursor":apk,"sform":sform},context_instance=c)
         else:
             return render_to_response("main.html",{"msg":"No se han encontrado coincidencias","err":True,"sform":sform},context_instance=c)

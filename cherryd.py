@@ -155,4 +155,5 @@ if __name__ == '__main__':
         else:
             Exit('Use: rcserver start|stop|restart')
     else:
-        Exit('Invalid params number\nUse: rcserver start|stop|restart')
+        main(host='0.0.0.0',port=8800)
+        #Exit('Invalid params number\nUse: rcserver start|stop|restart')

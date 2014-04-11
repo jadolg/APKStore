@@ -15,20 +15,14 @@
         {% endblock error %}
         {% block resultados %}
             <b><center>Archivos adicionales</center></b>
-            <!--<div class="apk">
-                <label class="pull-left">{{ apk.0 }}</label>
-                <span class="label label-info pull-right">v{{apk.3}}</span>
-                <img src="/ico/{{ apk.1 }} " class="img-rounded icono"/>
-                <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ apk.2 }}"><i class="icon-download"></i>Descargar</a>
-            </div>-->
             {% if rel|length > 0 %}
               <div class="well visible-phone">
                 {% for file in rel%}
                     <div class="apk1">                
-                        <label class="pull-left">{{ file }}</label>
-                        <span class="label label-info pull-right">v{{apk.3}}</span>
+                        <label class="pull-left">{{ file|truncatechars:30 }}</label>
+                        <span class="label label-info pull-right">v{{apk.versionName|truncatechars:30}}</span>
                         <img src="/static/file.png" class="img-rounded icono"/>
-                        <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
+                        <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
                     </div>                 
                 {% endfor %}
                </div>
@@ -36,10 +30,10 @@
                 {% for file in rel%}
                   <div class="span6">
                     <div class="apk">                
-                        <label class="pull-left">{{ file }}</label>
-                        <span class="label label-info pull-right">v{{apk.3}}</span>
+                        <label class="pull-left">{{ file|truncatechars:30 }}</label>
+                        <span class="label label-info pull-right">v{{apk.versionName|truncatechars:30}}</span>
                         <img src="/static/file.png" class="img-rounded icono"/>
-                        <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
+                        <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
                     </div>
                    </div>                  
                 {% endfor %}
@@ -48,10 +42,10 @@
                 {% for file in rel%}
                   <div class="span4">
                     <div class="apk">                
-                        <label class="pull-left">{{ file }}</label>
-                        <span class="label label-info pull-right">v{{apk.3}}</span>
+                        <label class="pull-left">{{ file|truncatechars:30 }}</label>
+                        <span class="label label-info pull-right">v{{apk.versionName|truncatechars:30}}</span>
                         <img src="/static/file.png" class="img-rounded icono"/>
-                        <a class="btn btn-info descarga pull-right" href="/apk{{ apk.5 }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
+                        <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
                     </div> 
                    </div>                 
                 {% endfor %}

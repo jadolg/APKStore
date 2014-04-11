@@ -1,5 +1,6 @@
 #  models.py
-#
+# -*- coding: UTF-8 -*-
+
 #  Copyright 2014 Jorge Alberto Díaz Orozco <jaorozco@estudiantes.uci.cu>
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -19,4 +20,13 @@
 
 from django.db import models
 
-# Create your models here.
+class apks(models.Model):
+    nombre = models.CharField(max_length=30)
+    icon = models.TextField()
+    descripcion = models.TextField()
+    ruta = models.TextField()
+    versionName = models.CharField(max_length=20)
+    version = models.TextField()
+    pool = models.TextField()
+    ind = models.IntegerField()
+    relativo = models.TextField()

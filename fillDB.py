@@ -28,13 +28,12 @@ from sys import argv
 import os
 import re
 import subprocess
-import sqlite3
+
 
 from django.conf import settings
-
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'APKStore.settings')
 
+from APKIndex.models import apks
 
 POOL = settings.APK_ROOT
 OUTPUT = settings.ICONS_ROOT
@@ -142,39 +141,32 @@ def extractIcon(aapk,ind):
         return "no_icon.png"
 
 def createDB():
-    database = sqlite3.connect(DB)
-    cursor  = database.cursor()
-    #nombre icon ruta versionName versionCode poolindex id archivosrelativos
-    cursor.execute("create table apks (nombre text, icon text, ruta text, versionName text, version text,pool text,id int,relativo text)")
     ind = 0
     r = 0
     for k in listAPKs():
         for i in k:
             theAPKdata = getData(i)
             if theAPKdata:
-                nombre = theAPKdata[0][:20]
+                nombre = theAPKdata[0][:30]
                 icon = extractIcon(i,ind)
 
                 versionName = theAPKdata[2][:20]
                 version = theAPKdata[3]
 
-                data = (nombre,icon,i.replace(POOL[r],""),versionName,version,str(r),ind,getRelatives(i))
                 ind += 1
-                #print data
                 try:
-                    cursor.execute("insert into apks values (?,?,?,?,?,?,?,?)",data)
+                    a = apks(nombre=nombre,icon=icon,descripcion="",ruta=i.replace(POOL[r],""),versionName=versionName,version=version,pool=str(r),ind=ind,relativo=getRelatives(i))
+                    a.save()
                 except:
                     print ("Can not insert "+nombre+" file: "+i)
-                database.commit()
             else:
                 print ("Can not get data from file: "+i)
 
         r += 1
 
 def cleanDB():
-    if exists(DB):
-        print 'deleting database...'
-        remove(DB)
+    print 'cleaning database...'
+    apks.objects.all().delete()
 
     print 'deleting icons...'
     cleanIcons()
