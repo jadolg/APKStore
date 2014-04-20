@@ -40,11 +40,10 @@
      <div class='navbar navbar-inverse  navbar-fixed-top'>
         <div class="navbar-inner">
             <div class="container" style="align: center;">
-            	<img src="static/favicon.png" alt=""> 	
+            	<img src="/static/favicon.png" alt="">
                 <a class="brand" href="#">APKStore</a> 
-                    
-                
-                <form id="fsearch" class="theform navbar-search navbar-form pull-right" method="POST" action="">
+
+                <form id="fsearch" class="theform navbar-search navbar-form pull-right" method="GET" action="">
                     {% csrf_token %}
                     <input type="text" id="search" name="asearch" class="span2 search-query input-buscar" placeholder="Buscar">
                 </form>                
@@ -53,6 +52,7 @@
     </div>
     {% endblock navbar%}
       <div class="resultados" align="center">
+
         {% block error %}
         {%if err%}
             <div class="alert alert-error">
@@ -73,7 +73,7 @@
                     <img src="/ico/{{ apk.icon }} " class="img-rounded icono" style="margin-left:10px"/>
                     <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}/{{ apk.ruta }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Descargar</a>
                     {% if apk.relativo|length > 0 %}
-                        <a class="btn btn-info descarga pull-right" href="/{{ apk.ind }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Adicionales</a>
+                        <a class="btn btn-info descarga pull-right" href="/adicionales/{{ apk.ind }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Adicionales</a>
                     {% endif %}
              </div>   
               </div>   
@@ -89,7 +89,7 @@
                     <img src="/ico/{{ apk.icon }} " class="img-rounded icono"/>
                     <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool  }}/{{ apk.ruta }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Descargar</a>
                     {% if apk.relativo|length > 0 %}
-                        <a class="btn btn-info descarga pull-right" href="/{{ apk.ind }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Adicionales</a>
+                        <a class="btn btn-info descarga pull-right" href="/adicionales/{{ apk.ind }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Adicionales</a>
                     {% endif %}
              </div>   
               </div>            
@@ -104,7 +104,7 @@
                     <img src="/ico/{{ apk.icon }} " class="img-rounded icono"/>
                     <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}/{{ apk.ruta }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Descargar</a>
                     {% if apk.relativo|length > 0 %}
-                        <a class="btn btn-info descarga pull-right" href="/{{ apk.ind }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Adicionales</a>
+                        <a class="btn btn-info descarga pull-right" href="/adicionales/{{ apk.ind }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Adicionales</a>
                     {% endif %}
              </div>   
               </div>            
@@ -113,6 +113,25 @@
         {% endblock resultados %}
         </div>
         </div>
-    </div>
+     {% block pagination %}
+            {% if cursor|length > 0 %}
+                 <div class="pagination"  >
+                    <span class="step-links">
+                        {% if cursor.has_previous %}
+                            <a  class="btn btn-info"  href="/buscar/{{ asearch }}/{{ cursor.previous_page_number }}"><--</a>
+                        {% endif %}
+
+                        <span class="btn-info">
+                            Page {{ cursor.number }} of {{ cursor.paginator.num_pages }}.
+                        </span>
+
+                        {% if cursor.has_next %}
+                            <a  class="btn btn-info"  href="/buscar/{{ asearch }}/{{ cursor.next_page_number }}">--></a>
+                        {% endif %}
+                    </span>
+            </div>
+        {% endif %}
+     {% endblock %}
+     </div>
 </body>
 </html>

@@ -29,7 +29,9 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'APKIndex.views.main', name='main'),
-    url(r'^(\d+)$', 'APKIndex.views.app', name='app'),
+    url(r'^buscar/(.*?)/(\d+)$', 'APKIndex.views.search', name='search'),
+    url(r'^adicionales/(\d+)$', 'APKIndex.views.app', name='app'),
+
     # url(r'^APKStore/', include('APKStore.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

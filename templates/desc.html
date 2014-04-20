@@ -8,7 +8,8 @@
 <body>
     {% block navbar %}
         {{ block.super }}
-    {% endblock navbar%}   
+    {% endblock navbar%}
+
     <div class="resultados" align="center" >
         {% block error %}
             {{ block.super }}
@@ -54,7 +55,9 @@
             </div>
             <a class="btn btn-info go-back" align="center" style="margin-bottom: 25px;" href="javascript:history.go(-1)" >Atrás</a>    
         {% endblock resultados %}  
-                 
+
+    {% block pagination %}
+       {% endblock %}
     </div>
 
 </body>

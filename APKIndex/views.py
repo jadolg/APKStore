@@ -19,63 +19,84 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http.response import HttpResponseRedirect
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-import operator
-from models import apks
-from django.db.models import Q
 
+from models import apks
+from utiles.misc_functions import search_keywords
+
+def checkSearch(request):
+    if request.GET.has_key('asearch'):
+        keywords= request.GET['asearch']
+        page = 1
+        if request.GET.has_key('page'):
+            page = request.GET['page']
+        return HttpResponseRedirect('/buscar/'+keywords+'/'+str(page))
+    else:
+        return False
 
 def main(request):
-    return aresponse(request)
+    s = checkSearch(request)
+    if  s != False:
+        return s
+    else:
+        return aresponse(request)
 
 def app(request,id):
+    s = checkSearch(request)
+    if  s != False:
+        return s
     return aresponse(request,id)
 
+def search(request,keywords,page=1):
+    s = checkSearch(request)
+    if  s != False:
+        return s
+    else:
+        return aresponse(request,keywords=keywords,page=page)
 
-def search_keywords(apks, keywords):
-    if isinstance(keywords, str):
-        keywords = [keywords]
-
-    if not isinstance(keywords, list):
-        return None
-
-    nameSearch = [Q(nombre__icontains=x) for x in keywords]
-    pathSearch = [Q(ruta__icontains=x) for x in keywords]
-
-    final_q = reduce(operator.or_, nameSearch + pathSearch)
-    r_qs = apks.objects.filter(final_q)
-    return r_qs
-
-
-def aresponse(request,id=None):
+def aresponse(request,id=None,keywords=None,page=None):
     c = RequestContext(request)
 
     from forms import SearchForm
     sform = SearchForm()
 
-    if request.method == 'GET' and not id:
-        return render_to_response("main.html",{"err":False,"sform":sform},context_instance=c)
-    elif request.method == 'GET':
-        apk = apks.objects.get(ind=id)
+    if request.method == 'GET':
+        if id:
+            apk = apks.objects.get(ind=id)
 
-        rel = apk.relativo.split(":")
-        if len(rel)>0:
-            del rel[0]
-        import os
-        dir = os.path.dirname(apk.ruta)
+            rel = apk.relativo.split(":")
+            if len(rel)>0:
+                del rel[0]
+            import os
+            dir = os.path.dirname(apk.ruta)
 
-        return render_to_response("desc.html",{"dir":dir,"rel":rel,"apk":apk,"err":False,"sform":sform},context_instance=c)
-    elif request.method == 'POST':
-        asearch = request.POST['asearch']
-        searchp = asearch.split()
-        if len(searchp) == 0:
-            return render_to_response("main.html",{"err":False,"sform":sform},context_instance=c)
+            return render_to_response("desc.html",{"dir":dir,"rel":rel,"apk":apk,"err":False,"sform":sform},context_instance=c)
+        elif keywords != None and page != None:
+            asearch = keywords
+            searchp = asearch.split()
+            if len(searchp) == 0:
+                return render_to_response("main.html",{"err":False,"sform":sform},context_instance=c)
 
-        apk = search_keywords(apks,searchp)
+            apk = search_keywords(apks,searchp)
 
-        if len(apk) > 0:
-            return render_to_response("main.html",{"err":False,"cursor":apk,"sform":sform},context_instance=c)
+            paginator = Paginator(apk,9)
+            try:
+                lapk = paginator.page(page)
+            except PageNotAnInteger:
+                lapk = paginator.page(1)
+            except EmptyPage:
+                lapk = paginator.page(paginator.num_pages)
+
+
+            if len(apk) > 0:
+                return render_to_response("main.html",{"err":False,"cursor":lapk,"asearch":asearch,"sform":sform},context_instance=c)
+            else:
+                return render_to_response("main.html",{"err":True,"msg":"No se han encontrado coincidencias","sform":sform},context_instance=c)
         else:
-            return render_to_response("main.html",{"msg":"No se han encontrado coincidencias","err":True,"sform":sform},context_instance=c)
+            return render_to_response("main.html",{"err":False,"cursor":[],"sform":sform},context_instance=c)
+    else:
+        pass
