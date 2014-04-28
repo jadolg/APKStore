@@ -51,6 +51,12 @@ def app(request,id):
         return s
     return aresponse(request,id)
 
+def all(request):
+    s = checkSearch(request)
+    if  s != False:
+        return s
+    return search(request,keywords="*all*")
+
 def search(request,keywords,page=1):
     s = checkSearch(request)
     if  s != False:
@@ -81,9 +87,12 @@ def aresponse(request,id=None,keywords=None,page=None):
             if len(searchp) == 0:
                 return render_to_response("main.html",{"err":False,"sform":sform},context_instance=c)
 
-            apk = search_keywords(apks,searchp)
+            if keywords == "*all*":
+                apk = apks.objects.all()
+            else:
+                apk = search_keywords(apks,searchp)
 
-            paginator = Paginator(apk,9)
+            paginator = Paginator(apk,20)
             try:
                 lapk = paginator.page(page)
             except PageNotAnInteger:
