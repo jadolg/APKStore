@@ -32,20 +32,27 @@
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet" type="text/css" />
-    <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" /> 
+    <link href="{% static "css/font-awesome.css" %}" rel="stylesheet" type="text/css" />
+     <!--<link href="{% static "css/index.css" %}" rel="stylesheet" type="text/css" />-->
     {% endblock cabezera %}
 </head>
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
  	 {% block navbar %}
-     <div class='navbar navbar-inverse  navbar-fixed-top'>
+     <div class='navbar navbar-inverse navbar-fixed-top'>
         <div class="navbar-inner">
             <div class="container" style="align: center;">
-            	<img src="/static/favicon.png" alt="">
-                <a class="brand" href="#">APKStore</a> 
-
+            	<a <a href=""> <img src="/static/favicon3.png" alt=""></a>
                 <form id="fsearch" class="theform navbar-search navbar-form pull-right" method="GET" action="">
                     {% csrf_token %}
-                    <input type="text" id="search" name="asearch" class="span2 search-query input-buscar" placeholder="Buscar">
+                   <!-- <input style="width: 187px; font-family: Arial;" autocomplete="off" name="q" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">
+					<div id="search_wrapper_homepage">
+					<input id="search_button_homepage" tabindex="2" value="" type="submit">
+					<a id="search_dropdown_homepage" class="btn" href="javascript:;" onclick="nbc(1);"></a>
+					</div>
+					<input style="width: 187px; font-family: Arial;" autocomplete="off" name="q" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">-->
+                   <input type="text" id="search" name="asearch" class="span4 search-query input-buscar" placeholder="Buscar">
+                   <!-- <button class="btn btn-sm btn-default" id="search" type="submit"></button>  -->
                 </form>                
             </div>
         </div>
@@ -64,11 +71,11 @@
         {% endblock error %}
     <div class="row" responsive-utilities>
         {% block resultados %}
-       <div class="well visible-phone">
+       <div class="visible-phone" style="margin-right: 5%;">
         {% for apk in cursor %}
-        	<div class="span12" style="padding:0px">
+        	<div class="span12">
                 <div class="apk1">
-                    <label class="pull-left" style="margin-left:10px">{{ apk.nombre|truncatechars:30 }}</label>
+                    <label style="margin-left: 5px;" class="pull-left" style="margin-left:10px">{{ apk.nombre|truncatechars:30 }}</label>
                     <span class="label label-info pull-right">v{{ apk.versionName|truncatechars:30 }}</span>
                     <img src="/ico/{{ apk.icon }} " class="img-rounded icono" style="margin-left:10px"/>
                     <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}/{{ apk.ruta }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Descargar</a>
@@ -80,11 +87,11 @@
 
         {% endfor %}
      </div>
-               <div class="well visible-tablet">
+               <div style="margin-left: 2%;" class="visible-tablet">
         {% for apk in cursor %}
               <div class="span6">
                 <div class="apk">
-                    <label class="pull-left">{{ apk.nombre|truncatechars:30 }}</label>
+                    <label style="margin-left: 5px;" class="pull-left">{{ apk.nombre|truncatechars:30 }}</label>
                     <span class="label label-info pull-right">v{{ apk.versionName|truncatechars:30 }}</span>
                     <img src="/ico/{{ apk.icon }} " class="img-rounded icono"/>
                     <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool  }}/{{ apk.ruta }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Descargar</a>
@@ -95,11 +102,11 @@
               </div>            
         {% endfor %}
         </div>
-      <div class="well visible-desktop">
+      <div style="margin-left: 5%;" class="pagination-centered hidden-tablet hidden-phone">
         {% for apk in cursor %}
               <div class="span4">
                 <div class="apk">
-                    <label class="pull-left">{{ apk.nombre|truncatechars:30 }}</label>
+                    <label style="margin-left: 5px;" class="pull-left">{{ apk.nombre|truncatechars:30 }}</label>
                     <span class="label label-info pull-right">v{{apk.versionName|truncatechars:30}}</span>
                     <img src="/ico/{{ apk.icon }} " class="img-rounded icono"/>
                     <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}/{{ apk.ruta }}" style="margin-right: 5px; margin-top: 20px;"><i class="icon-download"></i>Descargar</a>
@@ -115,21 +122,24 @@
         </div>
      {% block pagination %}
             {% if cursor|length > 0 %}
-                 <div class="pagination"  >
+                <footer class="footer hidden-print text-center">
+                 <div class="pagination">
+					
                     <span class="step-links">
                         {% if cursor.has_previous %}
-                            <a  class="btn btn-info"  href="/buscar/{{ asearch }}/{{ cursor.previous_page_number }}"><--</a>
+                            <a class="btn btn-sm btn-info" href="/buscar/{{ asearch }}/{{ cursor.previous_page_number }}"></a>
                         {% endif %}
 
-                        <span class="btn-info">
-                            Page {{ cursor.number }} of {{ cursor.paginator.num_pages }}.
+                        <span class="btn btn-inactive btn-sm btn-info">
+                            <b>{{ cursor.number }} of {{ cursor.paginator.num_pages }}</b>
                         </span>
 
                         {% if cursor.has_next %}
-                            <a  class="btn btn-info"  href="/buscar/{{ asearch }}/{{ cursor.next_page_number }}">--></a>
+                            <a class="btn btn-sm btn-info" href="/buscar/{{ asearch }}/{{ cursor.next_page_number }}"></a>
                         {% endif %}
                     </span>
             </div>
+            </footer>
         {% endif %}
      {% endblock %}
      </div>

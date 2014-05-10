@@ -1,0 +1,98 @@
+<!--
+   main.html
+
+   Copyright 2014
+   Jorge Alberto Díaz Orozco <jaorozco@estudiantes.uci.cu>
+   Manuel Alejandro Sánchez del Campo <madelcampo@estudiantes.uci.cu>
+   Carlos Osiel Rojas Velázquez <corojas@uci.cu>
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+
+
+-->
+<!DOCTYPE html>
+<html lang="es_ES">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="HandheldFriendly" content="true">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>APKStore</title>
+<meta name="Description" content="Herramienta para facilitar las búsquedas de aplicaciones android.">
+<link rel="stylesheet" type="text/css" href="../static/css/index.css" media="all">
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap-responsive.css" media="all">
+<link ilo-full-src=" " rel="shortcut icon" href="../static/favicon.png" type="image/x-icon">
+
+</head>
+<body id="pg-index" class="yui-skin-sam">
+
+	    <div style="padding-top: 20px; top: 0px;" id="content_wrapper_homepage">
+	      <div id="content_homepage">
+		    		<a id="logo_homepage_link" title="APKStore" href="">
+			<div style="margin-bottom: 40px; padding-bottom: 1px; width: 220px; height: 161px;" id="logo_homepage">APKStore</div>
+		</a>
+
+		<div class="well visible-phone">
+			<form style="width: 275px;" name="x" method="GET" action=" " id="search_form_homepage" onsubmit="return nbr()">
+				<div id="search_wrapper_homepage">
+					<input id="search_button_homepage" tabindex="2" value="" type="submit">
+					<a id="search_dropdown_homepage" class="btn" href="javascript:;" onclick="nbc(1);"></a>
+				</div>
+				<input style="width: 187px; font-family: Arial;" autocomplete="off" name="q" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">
+			</form>
+		</div>
+		<div class="well visible-tablet">
+			<form style="width: 397px;" name="x" method="GET" action=" " id="search_form_homepage" onsubmit="return nbr()">
+				<div id="search_wrapper_homepage">
+					<input id="search_button_homepage" tabindex="2" value="" type="submit">
+					<a id="search_dropdown_homepage" class="btn" href="javascript:;" onclick="nbc(1);"></a>
+				</div>
+				<input style="width: 309px; font-family: Arial;" autocomplete="off" name="q" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">
+			</form>
+		</div>
+		<div class="well visible-desktop">
+			<form style="width: 518px;" name="x" method="GET" action=" " id="search_form_homepage" onsubmit="return nbr()">
+				<div id="search_wrapper_homepage">
+					<input id="search_button_homepage" tabindex="2" value="" type="submit">
+					<a id="search_dropdown_homepage" class="btn" href="javascript:;" onclick="nbc(1);"></a>
+				</div>
+				<input style="width: 430; font-family: Arial;" autocomplete="off" name="q" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">
+			</form>
+		</div>
+
+	<!-- es_ES Todas las configuraciones -->
+		
+<div id="tagline_homepage">
+
+Descubre un universo de aplicaciones. 
+</div>
+		
+		<div id="error_homepage"></div>
+		<div style="clear: both; margin-top: 20px;"></div>	
+
+	  
+	    	 </div> <!-- content_homepage //-->
+	      </div> <!-- content_wrapper_homepage //-->	
+	    <div id="footer_homepage">
+	<div id="footer_homepage_left">
+	<a href=" ">¡Sobre APKStore!</a>
+
+	</div>
+</div>
+
+<canvas style="display: none;" height="35" width="35"></canvas></body>
+</html>

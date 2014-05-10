@@ -1,3 +1,28 @@
+<!--
+   main.html
+
+   Copyright 2014
+   Jorge Alberto Díaz Orozco <jaorozco@estudiantes.uci.cu>
+   Manuel Alejandro Sánchez del Campo <madelcampo@estudiantes.uci.cu>
+   Carlos Osiel Rojas Velázquez <corojas@uci.cu>
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+
+
+-->
 {% extends "main.html" %}
 <!DOCTYPE html>
 <html>
@@ -17,35 +42,35 @@
         {% block resultados %}
             <b><center>Archivos adicionales</center></b>
             {% if rel|length > 0 %}
-              <div class="well visible-phone">
+              <div class="visible-phone">
                 {% for file in rel%}
                     <div class="apk1">                
-                        <label class="pull-left">{{ file|truncatechars:30 }}</label>
+                        <label style="margin-left: 5px;" class="pull-left">{{ file|truncatechars:30 }}</label>
                         <span class="label label-info pull-right">v{{apk.versionName|truncatechars:30}}</span>
-                        <img src="/static/file.png" class="img-rounded icono"/>
+                        <img style="margin-left: 5px;" src="/static/file.png" class="img-rounded icono"/>
                         <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
                     </div>                 
                 {% endfor %}
                </div>
-              <div class="well visible-tablet">
+              <div style="margin-left: 2%;" class="visible-tablet">
                 {% for file in rel%}
                   <div class="span6">
                     <div class="apk">                
-                        <label class="pull-left">{{ file|truncatechars:30 }}</label>
+                        <label style="margin-left: 5px;" class="pull-left">{{ file|truncatechars:30 }}</label>
                         <span class="label label-info pull-right">v{{apk.versionName|truncatechars:30}}</span>
-                        <img src="/static/file.png" class="img-rounded icono"/>
+                        <img style="margin-left: 5px;"src="/static/file.png" class="img-rounded icono"/>
                         <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
                     </div>
                    </div>                  
                 {% endfor %}
                </div>
-              <div class="well visible-desktop">
+              <div style="margin-left: 5%;" class="pagination-centered hidden-tablet hidden-phone">
                 {% for file in rel%}
                   <div class="span4">
                     <div class="apk">                
-                        <label class="pull-left">{{ file|truncatechars:30 }}</label>
+                        <label style="margin-left: 5px;" class="pull-left">{{ file|truncatechars:30 }}</label>
                         <span class="label label-info pull-right">v{{apk.versionName|truncatechars:30}}</span>
-                        <img src="/static/file.png" class="img-rounded icono"/>
+                        <img style="margin-left: 5px;" src="/static/file.png" class="img-rounded icono"/>
                         <a class="btn btn-info descarga pull-right" href="/apk{{ apk.pool }}{{ dir }}/{{ file }}"><i class="icon-download"></i>Descargar</a>
                     </div> 
                    </div>                 
