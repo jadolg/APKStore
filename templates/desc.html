@@ -33,16 +33,18 @@
 <body>
     {% block navbar %}
         {{ block.super }}
+		<b><center>Archivos adicionales</center></b>
     {% endblock navbar%}
-
+	
     <div class="resultados" align="center" >
         {% block error %}
             {{ block.super }}
         {% endblock error %}
+        
         {% block resultados %}
-            <b><center>Archivos adicionales</center></b>
+
             {% if rel|length > 0 %}
-              <div class="visible-phone">
+              <div class="visible-phone" style="margin-right: 5%;">
                 {% for file in rel%}
                     <div class="apk1">                
                         <label style="margin-left: 5px;" class="pull-left">{{ file|truncatechars:30 }}</label>
@@ -52,7 +54,7 @@
                     </div>                 
                 {% endfor %}
                </div>
-              <div style="margin-left: 2%;" class="visible-tablet">
+              <div style="margin-left: 3%;" class="visible-tablet">
                 {% for file in rel%}
                   <div class="span6">
                     <div class="apk">                
@@ -64,7 +66,7 @@
                    </div>                  
                 {% endfor %}
                </div>
-              <div style="margin-left: 5%;" class="pagination-centered hidden-tablet hidden-phone">
+              <div style="margin-left: 5%; margin-top: 20px;" class="pagination-centered hidden-tablet hidden-phone">
                 {% for file in rel%}
                   <div class="span4">
                     <div class="apk">                
@@ -78,7 +80,7 @@
                </div>                      
             {% endif %}
             </div>
-            <a class="btn btn-info go-back" align="center" style="margin-bottom: 25px;" href="javascript:history.go(-1)" >Atrás</a>    
+            <a class="btn btn-info go-back" align="center" style="margin-bottom: 25px; margin-top: 20px;" href="javascript:history.go(-1)" >Atrás</a>    
         {% endblock resultados %}  
 
     {% block pagination %}

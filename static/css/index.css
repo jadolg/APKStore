@@ -65,7 +65,7 @@ ul li { list-style: disc outside none; }
 #search_wrapper_homepage { position: absolute; top: 0px; right: 0px; z-index: 3; float: right; height: 39px; width: 67px; background: none repeat scroll 0% 0% rgb(45, 183, 80); overflow: hidden; border-radius: 0px 3px 3px 0px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2); }
 #search_button_homepage { float: left; height: 39px; width: 44px; border: 0px none; background: url('../search_dropdown_homepage.v101.png') no-repeat scroll 0% 0% / 67px 78px transparent; cursor: pointer; }
 #search_button_homepage:active { background-position: 0px -39px; }
-#tagline_homepage { color: rgb(116, 116, 116); margin: auto; text-align: center; font-size: 16px; padding-top: 45px; }
+#tagline_homepage { color: rgb(116, 116, 116); margin: auto; text-align: center; font-size: 16px; padding-top: 30px; }
 @media screen and (max-width: 500px) {
 }
 .modal, .add_to_browser, #footer_homepage .add_to_browser, #footer_homepage .modal { min-height: 50px; width: 185px; background-color: rgb(255, 255, 255); border: 1px solid rgb(194, 194, 194); display: none; position: absolute; bottom: 25px; left: -10px; text-align: left; padding: 13px 7px 18px 18px; margin: 10px; border-radius: 4px; z-index: 1000; font-size: 14px; box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2); }
