@@ -85,16 +85,36 @@ MEDIA_URL = ''
 
 import os
 import ConfigParser
+from pyQR.pyQR import *
+
+
+def makeQR(str,path):
+    for i in xrange(1,41):
+        try:
+            qr = QRCode(i, QRErrorCorrectLevel.H)
+            qr.addData(str)
+            qr.make()
+            break
+        except:
+            continue
+
+    im = qr.makeImage()
+    im.save(path)
+
 conf = ConfigParser.RawConfigParser()
+
 
 if not os.path.exists("config.conf"):
     conf.add_section('main')
-    conf.set("main","apk pool","")
+    conf.set("main","apk pool","/una/ruta, /otra/ruta")
+    conf.set('main',"server address","http://apkstore.cu")
     conf.write(open('config.conf','wb'))
 
 conf.read('config.conf')
 
 STATIC_ROOT = os.path.abspath(os.getcwd())+'/static'
+
+makeQR(conf.get('main',"server address"),STATIC_ROOT+'/qr_apk.jpg')
 
 DB_URL = os.path.abspath(os.getcwd())+'/data.db'
 

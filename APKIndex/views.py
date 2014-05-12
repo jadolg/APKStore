@@ -25,6 +25,8 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from django.core.urlresolvers import resolve
+
 from models import apks
 from utiles.misc_functions import search_keywords
 
@@ -37,6 +39,10 @@ def checkSearch(request):
         return HttpResponseRedirect('/buscar/'+keywords+'/'+str(page))
     else:
         return False
+
+def adec(*args,**kwargs):
+    print args
+    return args[0]
 
 def main(request):
     s = checkSearch(request)
@@ -106,6 +112,6 @@ def aresponse(request,id=None,keywords=None,page=None):
             else:
                 return render_to_response("main.html",{"err":True,"msg":"No se han encontrado coincidencias","sform":sform},context_instance=c)
         else:
-            return render_to_response("main.html",{"err":False,"cursor":[],"sform":sform},context_instance=c)
+            return render_to_response("index.html",{"err":False,"cursor":[],"sform":sform},context_instance=c)
     else:
         pass

@@ -23,6 +23,8 @@
 from django.db.models import Q
 import operator
 
+
+
 def search_keywords(apks, keywords):
     if isinstance(keywords, str):
         keywords = [keywords]
@@ -36,3 +38,4 @@ def search_keywords(apks, keywords):
     final_q = reduce(operator.and_, nameSearch + pathSearch)
     r_qs = apks.objects.filter(final_q)
     return r_qs
+

@@ -29,7 +29,7 @@ import cherrypy
 from pydaemonlib.pydaemonlib import Daemon
 from sys import argv
 from sys import exit as Exit
-
+from pyQR.pyQR import *
 
 # Django settings
 #~ sys.path.append(os.path.abspath(os.getcwd())+'/WebBlog')
@@ -37,8 +37,8 @@ from sys import exit as Exit
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'APKStore.settings')
 # Celery loader
 os.environ['CELERY_LOADER'] = 'djcelery.loaders.DjangoLoader'
- 
- 
+
+
 class DjangoApplication(object):
     def __init__(self):
         self.servers = []
@@ -129,11 +129,12 @@ class DjangoApplication(object):
         app = WSGIHandler()
         if self.domains:
             app = cherrypy.wsgi.VirtualHost(app, self.domains)
+
         cherrypy.tree.graft(app)
         cherrypy.engine.start()
         cherrypy.engine.block()
- 
- 
+
+
 def main(**kwargs):
     app = DjangoApplication()
     app.run(**kwargs)
