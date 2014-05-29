@@ -33,15 +33,15 @@
 
 <title>APKStore</title>
 <meta name="Description" content="Herramienta para facilitar las búsquedas de aplicaciones android.">
-<link rel="stylesheet" type="text/css" href="../static/css/index.css" media="all">
-<link rel="stylesheet" type="text/css" href="../static/css/bootstrap-responsive.css" media="all">
-<link ilo-full-src=" " rel="shortcut icon" href="../static/favicon.png" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="/static/css/index.css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-responsive.css" media="all">
+<link ilo-full-src=" " rel="shortcut icon" href="/static/favicon.png" type="image/x-icon">
 
 </head>
-<body id="pg-index" class="yui-skin-sam">
+<body id="pg-index" class="yui-skin-sam" style="position: relative;">
 		 <div class="well visible-tablet">
 			<!-- Nuevo código insertado "Código Qr adaptado para la vista en dispositivos móviles" -->
-			 <img style="float: right; margin-right: 4%; margin-top: 2%; padding-bottom: 1px; width: 80px; height: 80px;" src="../static/qr_apk.jpg" >
+			 <img style="float: right; margin-right: 4%; margin-top: 2%; padding-bottom: 1px; width: 80px; height: 80px;" src="/static/qr_apk.jpg" >
 			<!-- Hasta aquí -->
 		</div>
 	    <div style="padding-top: 35px; top: 0px;" id="content_wrapper_homepage">
@@ -52,9 +52,9 @@
 			<div style="margin-bottom: 40px; padding-bottom: 1px; width: 220px; height: 70px;" id="logo_homepage">APKStore</div>
 			</div>
 			<div class="well visible-tablet">
-			<div style="margin-bottom: 40px; padding-bottom: 1px; width: 220px; height: 161px;" id="logo_homepage">APKStore</div>
+			<div style="margin-bottom: 40px; padding-bottom: 1px; padding-top: 30px; width: 220px; height: 161px;" id="logo_homepage">APKStore</div>
 			</div>
-			<div class="well hidden-phone hidden-tablet">
+			<div class="well visible-desktop">
 			<div style="margin-bottom: 40px; padding-bottom: 1px; padding-top: 30px; width: 220px; height: 161px;" id="logo_homepage">APKStore</div>
 			</div>
 			<!-- Hasta aquí -->
@@ -69,17 +69,20 @@
 				<input style="width: 187px; font-family: Arial;" autocomplete="on" name="asearch" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">
 			</form>
 			<!-- Nuevo código insertado "Código Qr adaptado para la vista en dispositivos móviles" -->
-			 <img style="margin-left: 30%; margin-top: 12%; padding-bottom: 1px; width: 100; height: 100px;" src="../static/qr_apk.jpg" >
+			 <div style="text-align: center;">
+			 <img style="margin-top: 12%; padding-bottom: 1px; width: 100; height: 100px;" src="/static/qr_apk.jpg" >
+			 </div>
 			<!-- Hasta aquí -->
 		</div>
 		<div class="well visible-tablet">
-			<form style="width: 397px;" name="x" method="GET" action=" " id="search_form_homepage" onsubmit="return nbr()">
+			<form style="width: 397; margin-bottom: 40px;" name="x" method="GET" action=" " id="search_form_homepage" onsubmit="return nbr()">
 				<div id="search_wrapper_homepage">
 					<input id="search_button_homepage" tabindex="2" value="" type="submit">
 					<a id="search_dropdown_homepage" class="btn" href="javascript:;" onclick="nbc(1);"></a>
 				</div>
-				<input style="width: 309px; font-family: Arial;" autocomplete="on" name="asearch" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">
+				<input style="width: 309; font-family: Arial;" autocomplete="on" name="asearch" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">
 			</form>
+			
 		</div>
 		<div class="well visible-desktop">
 			<form style="width: 518px;" name="x" method="GET" action=" " id="search_form_homepage" onsubmit="return nbr()">
@@ -98,9 +101,9 @@
 Descubre un universo de aplicaciones. 
 </div>
 
-		<div class="well visible-desktop" >
+		<div class="well visible-desktop" style="text-align: center;">
 			<!-- Nuevo código insertado "Código Qr adaptado para la vista en Desktop" -->
-			 <img style="margin-left: 40%; margin-top: 6%; padding-bottom: 1px; width: 120px; height: 120px;" src="/static/qr_apk.jpg" >
+			 <img style="margin-top: 6%; padding-bottom: 1px; width: 120px; height: 120px;" src="/static/qr_apk.jpg" >
 			<!-- Hasta aquí -->
 		</div>
 		<div id="error_homepage"></div>
@@ -109,12 +112,12 @@ Descubre un universo de aplicaciones.
 	  
 	    	 </div> <!-- content_homepage //-->
 	      </div> <!-- content_wrapper_homepage //-->	
-	    <div id="footer_homepage">
+<!--	    <div id="footer_homepage">
 	<div id="footer_homepage_left">
 	<a href=" ">¡Sobre APKStore!</a>
 
 	</div>
-</div>
+</div>-->
 
 <canvas style="display: none;" height="35" width="35"></canvas></body>
 </html>

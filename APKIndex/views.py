@@ -33,6 +33,10 @@ from utiles.misc_functions import search_keywords
 def checkSearch(request):
     if request.GET.has_key('asearch'):
         keywords= request.GET['asearch']
+        
+        if keywords == "":
+            keywords = "*all*"
+        
         page = 1
         if request.GET.has_key('page'):
             page = request.GET['page']
@@ -90,6 +94,7 @@ def aresponse(request,id=None,keywords=None,page=None):
         elif keywords != None and page != None:
             asearch = keywords
             searchp = asearch.split()
+            
             if len(searchp) == 0:
                 return render_to_response("main.html",{"err":False,"sform":sform},context_instance=c)
 

@@ -54,16 +54,16 @@ ul li { list-style: disc outside none; }
 @media only screen and (max-width: 480px) {
 }
 @media only screen and (max-device-width: 600px) {
-	#content_homepage #logo_homepage { background-image: url('../logo_homepage_mobile.normal.v101.png'); background-size: 275px 62px; width: 275px; height: 62px; }
+	#content_homepage #logo_homepage { background-image: url('/static/logo_homepage_mobile.normal.v101.png'); background-size: 275px 62px; width: 275px; height: 62px; }
 }
-#logo_homepage { background: url('../logo_homepage.normal.v102.png') no-repeat scroll center top / 202px 160px transparent; margin: 40px auto; padding-bottom: 1px; height: 161px; text-align: center; color: transparent; text-indent: -9999px; font-size: 0px; width: 202px; }
+#logo_homepage { background: url('/static/logo_homepage.normal.v102.png') no-repeat scroll center top / 202px 160px transparent; margin: 40px auto; padding-bottom: 1px; height: 161px; text-align: center; color: transparent; text-indent: -9999px; font-size: 0px; width: 202px; }
 #search_form_homepage { width: 518px; margin: auto; text-align: left; position: relative; z-index: 0; }
 #search_form_homepage:after { content: ""; display: table; clear: both; }
-#search_dropdown_homepage { display: block; float: left; width: 23px; height: 40px; background: url('../search_dropdown_homepage.v101.png') no-repeat scroll right top / 67px 78px transparent; }
+#search_dropdown_homepage { display: block; float: left; width: 23px; height: 40px; background: url('/static/search_dropdown_homepage.v101.png') no-repeat scroll right top / 67px 78px transparent; }
 #search_dropdown_homepage:active { background-position: right bottom; }
 #search_form_input_homepage { position: relative; right: 67px; z-index: 2; float: right; background: none repeat scroll 0% 0% rgb(255, 255, 255); color: rgb(34, 34, 34); width: 430px; height: 28px; padding: 4px 6px 5px; margin: 0px; outline: 0px none; border: 1px solid rgb(141, 141, 141); font-size: 18px; border-radius: 3px 0px 0px 3px; box-shadow: 1px 1px 2px rgb(153, 153, 153) inset; }
 #search_wrapper_homepage { position: absolute; top: 0px; right: 0px; z-index: 3; float: right; height: 39px; width: 67px; background: none repeat scroll 0% 0% rgb(45, 183, 80); overflow: hidden; border-radius: 0px 3px 3px 0px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2); }
-#search_button_homepage { float: left; height: 39px; width: 44px; border: 0px none; background: url('../search_dropdown_homepage.v101.png') no-repeat scroll 0% 0% / 67px 78px transparent; cursor: pointer; }
+#search_button_homepage { float: left; height: 39px; width: 44px; border: 0px none; background: url('/static/search_dropdown_homepage.v101.png') no-repeat scroll 0% 0% / 67px 78px transparent; cursor: pointer; }
 #search_button_homepage:active { background-position: 0px -39px; }
 #tagline_homepage { color: rgb(116, 116, 116); margin: auto; text-align: center; font-size: 16px; padding-top: 30px; }
 @media screen and (max-width: 500px) {
@@ -122,18 +122,18 @@ ul li { list-style: disc outside none; }
 }
 @media not all, not all, only screen and (min--moz-device-pixel-ratio: 1.5), not all, only screen and (min-resolution: 96dpi) {
 	@media screen and (max-device-width: 600px) {
-	#content_homepage #logo_homepage { background-image: url('../logo_homepage_mobile.hdpi.v101.png'); }
+	#content_homepage #logo_homepage { background-image: url('/static/logo_homepage_mobile.hdpi.v101.png'); }
 }
-	#search_button_homepage, #search_dropdown_homepage { background-image: url('../search_dropdown_homepage.v101.hdpi.png'); }
+	#search_button_homepage, #search_dropdown_homepage { background-image: url('/static/search_dropdown_homepage.v101.hdpi.png'); }
 }
 @media not all {
 }
 @media not all, not all, only screen and (min--moz-device-pixel-ratio: 2), not all, not all, only screen and (min-resolution: 192dpi) {
-	#logo_homepage { background-image: url('../logo_homepage.retina.v101.png'); }
+	#logo_homepage { background-image: url('/static/logo_homepage.retina.v101.png'); }
 	@media screen and (max-device-width: 600px) {
-	#content_homepage #logo_homepage { background-image: url('../logo_homepage_mobile.retina.v101.png'); }
+	#content_homepage #logo_homepage { background-image: url('/static/logo_homepage_mobile.retina.v101.png'); }
 }
-	#search_button_homepage, #search_dropdown_homepage { background-image: url('../search_dropdown_homepage.v101.retina.png'); }
+	#search_button_homepage, #search_dropdown_homepage { background-image: url('/static/search_dropdown_homepage.v101.retina.png'); }
 }
 @media screen and (max-width: 1550px) {
 }
