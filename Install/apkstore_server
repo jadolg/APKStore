@@ -1,0 +1,2 @@
+#! /bin/sh 
+python /opt/APKStore/cherryd.py $1
