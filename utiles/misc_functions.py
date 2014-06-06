@@ -35,7 +35,13 @@ def search_keywords(apks, keywords):
     nameSearch = [Q(nombre__icontains=x) for x in keywords]
     pathSearch = [Q(ruta__icontains=x) for x in keywords]
 
-    final_q = reduce(operator.and_, nameSearch + pathSearch)
+    ns = []
+    ps = []
+    ns.append(reduce(operator.or_,nameSearch))
+    ps.append(reduce(operator.or_,pathSearch))
+
+    final_q = reduce(operator.and_, ns + ps)
+    print final_q
     r_qs = apks.objects.filter(final_q)
     return r_qs
 
