@@ -37,8 +37,9 @@ from APKIndex.models import apks
 
 POOL = settings.APK_ROOT
 OUTPUT = settings.ICONS_ROOT
+PATH = settings.BASE_DIR
 
-DB = settings.DB_URL
+#DB = settings.DB_URL
 
 
 def listAPKs():
@@ -103,7 +104,10 @@ def cleanIcons():
             os.remove(i)
 
 def getData(afile):
-    p = subprocess.Popen(['./aapt','d','badging',afile], stdout=subprocess.PIPE)
+    if (os.path.exists(PATH+'/aapt')):
+        p = subprocess.Popen([PATH+'/aapt','d','badging',afile], stdout=subprocess.PIPE)
+    else:
+        p = subprocess.Popen(['/opt/APKStore/aapt','d','badging',afile], stdout=subprocess.PIPE)
     out, err = p.communicate()
     if err:
         raise Exception(err)
