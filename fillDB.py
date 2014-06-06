@@ -183,14 +183,17 @@ def CleanAndBuildDB():
 
 
 def main():
-    if argv[1] == 'clean':
-        cleanDB()
-    elif argv[1] == 'build':
-        CleanAndBuildDB()
-    elif argv[1] == 'makedirs':
-        makeDirs()
+    if len(argv)>1:
+        if argv[1] == 'clean':
+            cleanDB()
+        elif argv[1] == 'build':
+            CleanAndBuildDB()
+        elif argv[1] == 'makedirs':
+            makeDirs()
+        else:
+            print 'nothing to do!!'
     else:
-        print 'nothing to do!!'
+        print "use: filldb clean|build|makedirs"
 
 if __name__ == '__main__':
 	main()
