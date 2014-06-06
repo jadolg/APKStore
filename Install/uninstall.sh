@@ -1,4 +1,6 @@
 #!/bin/bash
+service apkstore stop
+
 rm -R /opt/APKStore/
 rm /etc/init.d/apkstore
 rm /usr/sbin/apkstore_server
