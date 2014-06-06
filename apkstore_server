@@ -1,2 +1,2 @@
 #! /bin/sh 
-python cherryd.py $*
+python cherryd.py %1
