@@ -26,6 +26,7 @@ import socket
 import urllib
 import urlparse
 import cherrypy
+from APKStore import settings
 from pydaemonlib.pydaemonlib import Daemon
 from sys import argv
 from sys import exit as Exit
@@ -156,5 +157,5 @@ if __name__ == '__main__':
         else:
             Exit('Use: rcserver start|stop|restart')
     else:
-        main(host='0.0.0.0',port=8800)
+        main(host='0.0.0.0',port=int(settings.PORT))
         #Exit('Invalid params number\nUse: rcserver start|stop|restart')
