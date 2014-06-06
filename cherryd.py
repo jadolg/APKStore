@@ -142,7 +142,7 @@ def main(**kwargs):
 
 class server(Daemon):
     def run(self):
-        main(host='0.0.0.0',port=8800)
+        main(host='0.0.0.0',port=int(settings.PORT))
 
  
 if __name__ == '__main__':
