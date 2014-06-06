@@ -21,6 +21,20 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 
+import os
+import ConfigParser
+from pyQR.pyQR import *
+from sys import argv, exit
+from os.path import dirname, exists
+
+if exists(os.getcwd()+"/"+dirname(argv[0])):
+    BASE_DIR = os.path.abspath(os.getcwd()+"/"+dirname(argv[0]))
+elif exists(dirname(argv[0])):
+    BASE_DIR = os.path.abspath(dirname(argv[0]))
+else:
+    exit(1)
+
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -33,7 +47,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'data.db',                      # Or path to database file if using sqlite3.
+        'NAME': BASE_DIR+'/data.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -83,10 +97,6 @@ MEDIA_URL = ''
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
 
-import os
-import ConfigParser
-from pyQR.pyQR import *
-
 
 def makeQR(str,path):
     for i in xrange(1,41):
@@ -101,22 +111,25 @@ def makeQR(str,path):
     im = qr.makeImage()
     im.save(path)
 
+
 conf = ConfigParser.RawConfigParser()
+conf_path = '/etc/apkstore.conf'
 
+if not os.path.exists(conf_path):
+    conf_path = BASE_DIR+"/config.conf"
 
-if not os.path.exists("config.conf"):
+if not os.path.exists(BASE_DIR+"/config.conf"):
     conf.add_section('main')
     conf.set("main","apk pool","/una/ruta, /otra/ruta")
     conf.set('main',"server address","http://apkstore.cu")
-    conf.write(open('config.conf','wb'))
+    conf.write(open(conf_path,'wb'))
 
-conf.read('config.conf')
+conf.read(conf_path)
 
-STATIC_ROOT = os.path.abspath(os.getcwd())+'/static'
+STATIC_ROOT = BASE_DIR+"/static"
 
 makeQR(conf.get('main',"server address"),STATIC_ROOT+'/qr_apk.jpg')
 
-DB_URL = os.path.abspath(os.getcwd())+'/data.db'
 
 l = conf.get("main","apk pool").split(",")
 for i in xrange(0,len(l)):
@@ -126,7 +139,7 @@ APK_ROOT = l
 
 APK_URL = '/apk'
 
-ICONS_ROOT = os.path.abspath(os.getcwd())+'/icons'
+ICONS_ROOT = BASE_DIR+'/icons'
 ICONS_URL = '/ico/'
 
 # URL prefix for static files.
@@ -135,8 +148,8 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    'templates/css/',
-    'templates/img/',
+    BASE_DIR+'/templates/css/',
+    BASE_DIR+'/]templates/img/',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -176,7 +189,7 @@ ROOT_URLCONF = 'APKStore.urls'
 WSGI_APPLICATION = 'APKStore.wsgi.application'
 
 TEMPLATE_DIRS = (
-    'templates',
+    BASE_DIR+'/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
