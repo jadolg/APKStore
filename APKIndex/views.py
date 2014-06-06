@@ -30,49 +30,44 @@ from django.core.urlresolvers import resolve
 from models import apks
 from utiles.misc_functions import search_keywords
 
-def checkSearch(request):
-    if request.GET.has_key('asearch'):
-        keywords= request.GET['asearch']
-        
-        if keywords == "":
-            keywords = "*all*"
-        
-        page = 1
-        if request.GET.has_key('page'):
-            page = request.GET['page']
-        return HttpResponseRedirect('/buscar/'+keywords+'/'+str(page))
-    else:
-        return False
+def defbuscar(f):
+    def checkSearch(request):
+        if request.GET.has_key('asearch'):
+            keywords= request.GET['asearch']
 
-def adec(*args,**kwargs):
-    print args
-    return args[0]
+            if keywords == "":
+                keywords = "*all*"
 
+            page = 1
+            if request.GET.has_key('page'):
+                page = request.GET['page']
+            return HttpResponseRedirect('/buscar/'+keywords+'/'+str(page))
+        else:
+            return False
+
+    def wrapper(*arg):
+        s = checkSearch(arg[0])
+        if  s != False:
+            return s
+        else:
+            return f(*arg)
+    return wrapper
+
+@defbuscar
 def main(request):
-    s = checkSearch(request)
-    if  s != False:
-        return s
-    else:
-        return aresponse(request)
+    return aresponse(request)
 
+@defbuscar
 def app(request,id):
-    s = checkSearch(request)
-    if  s != False:
-        return s
     return aresponse(request,id)
 
+@defbuscar
 def all(request):
-    s = checkSearch(request)
-    if  s != False:
-        return s
     return search(request,keywords="*all*")
 
+@defbuscar
 def search(request,keywords,page=1):
-    s = checkSearch(request)
-    if  s != False:
-        return s
-    else:
-        return aresponse(request,keywords=keywords,page=page)
+    return aresponse(request,keywords=keywords,page=page)
 
 def aresponse(request,id=None,keywords=None,page=None):
     c = RequestContext(request)
