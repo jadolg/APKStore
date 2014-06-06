@@ -121,14 +121,17 @@ if not os.path.exists(conf_path):
 if not os.path.exists(BASE_DIR+"/config.conf"):
     conf.add_section('main')
     conf.set("main","apk pool","/una/ruta, /otra/ruta")
-    conf.set('main',"server address","http://apkstore.cu")
+    conf.set("main","port",8800)
+    conf.set("QR","server address","http://apkstore.cu")
     conf.write(open(conf_path,'wb'))
 
 conf.read(conf_path)
 
+PORT = conf.get("main","port")
+
 STATIC_ROOT = BASE_DIR+"/static"
 
-makeQR(conf.get('main',"server address"),STATIC_ROOT+'/qr_apk.jpg')
+makeQR(conf.get("QR","server address"),STATIC_ROOT+'/qr_apk.jpg')
 
 
 l = conf.get("main","apk pool").split(",")
