@@ -25,7 +25,7 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from django.core.urlresolvers import resolve
+from APKStore.settings import BASE_DIR
 
 from models import apks
 from utiles.misc_functions import search_keywords
