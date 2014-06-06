@@ -122,6 +122,7 @@
         </div>
         </div>
      {% block pagination %}
+         {%if not err%}
             {% if cursor|length > 0 %}
                 <footer class="footer hidden-print text-center">
                  <div class="pagination">
@@ -141,6 +142,7 @@
                     </span>
             </div>
             </footer>
+        {% endif %}
         {% endif %}
      {% endblock %}
      </div>
