@@ -20,14 +20,18 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 
+
 from zipfile import ZipFile
 from glob import glob as listDir
-from os import remove, mkdir, rename
-from os.path import exists, basename, dirname
-from sys import argv
+from os import mkdir, rename, chmod
+from os.path import basename, dirname
+from sys import argv,stdout
 import os
 import re
 import subprocess
+from hashlib import sha256
+
+
 
 
 from django.conf import settings
@@ -38,9 +42,6 @@ from APKIndex.models import apks
 POOL = settings.APK_ROOT
 OUTPUT = settings.ICONS_ROOT
 PATH = settings.BASE_DIR
-
-#DB = settings.DB_URL
-
 
 def listAPKs():
 
@@ -80,11 +81,12 @@ def makeDir(afile,i):
         newfile = dir+os.sep+basename(afile)
         print dir,"===",newfile
         try:
-            #pass
             mkdir(dir)
+            chmod(dir,0777)
         except:
             print 'cant make dir',dir
         rename(afile,newfile)
+        chmod(newfile,0777)
 
 def makeDirs():
     c = 0
@@ -147,7 +149,12 @@ def extractIcon(aapk,ind):
 def createDB():
     ind = 0
     r = 0
-    for k in listAPKs():
+    amm = 0
+    lapk = listAPKs()
+    for k in lapk:
+        amm += len(k)
+
+    for k in lapk:
         for i in k:
             theAPKdata = getData(i)
             if theAPKdata:
@@ -158,14 +165,23 @@ def createDB():
                 version = theAPKdata[3]
 
                 ind += 1
+                data = open(i,"rb").read(512)
+                thash = sha256(data)
+                sha =  thash.hexdigest()
+
                 try:
-                    a = apks(nombre=nombre,icon=icon,descripcion="",ruta=i.replace(POOL[r],""),versionName=versionName,version=version,pool=str(r),ind=ind,relativo=getRelatives(i))
-                    a.save()
+                    aux = apks.objects.filter(sha=sha)
+                    if len(aux) > 0:
+                        print 'aplicacion duplicada',i
+                    else:
+                        a = apks(sha=sha,nombre=nombre,icon=icon,descripcion="",ruta=i.replace(POOL[r],""),versionName=versionName,version=version,pool=str(r),ind=ind,relativo=getRelatives(i))
+                        a.save()
                 except:
                     print ("Can not insert "+nombre+" file: "+i)
+
             else:
                 print ("Can not get data from file: "+i)
-
+            print ">> "+str(ind)+'/'+str(amm)
         r += 1
 
 def cleanDB():
