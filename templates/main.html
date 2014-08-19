@@ -23,44 +23,13 @@
 
 
 -->
+{% extends "base.html" %}
+
 <!DOCTYPE html>
 <html>
-<head>
-	{% block cabezera %}
-    <title>APKStore</title>
-    {% load staticfiles %}
-    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" type="text/css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet" type="text/css" />
-    <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" /> 
-    <link href="{% static "css/font-awesome.css" %}" rel="stylesheet" type="text/css" />
-    <link ilo-full-src=" " rel="shortcut icon" href="/static/favicon.png" type="image/x-icon">
-     <!--<link href="{% static "css/index.css" %}" rel="stylesheet" type="text/css" />-->
-    {% endblock cabezera %}
-</head>
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
- 	 {% block navbar %}
-     <div class='navbar navbar-inverse navbar-fixed-top'>
-        <div class="navbar-inner">
-            <div class="container" style="align: center;">
-            	<a href="/"> <img src="/static/favicon3.png" alt=""></a>
-                <form id="fsearch" class="theform navbar-search navbar-form pull-right" method="GET" action="">
-                    {% csrf_token %}
-                   <!-- <input style="width: 187px; font-family: Arial;" autocomplete="off" name="q" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">
-					<div id="search_wrapper_homepage">
-					<input id="search_button_homepage" tabindex="2" value="" type="submit">
-					<a id="search_dropdown_homepage" class="btn" href="javascript:;" onclick="nbc(1);"></a>
-					</div>
-					<input style="width: 187px; font-family: Arial;" autocomplete="off" name="q" autofocus="" tabindex="1" onclick="if (this.value=='put search terms here') {this.value='';this.style.color='#000000';};if (is_mobile) DDG.toggle('footer_homepage');" onblur="if (is_mobile) DDG.toggle('footer_homepage',1)" id="search_form_input_homepage" onfocus="if ('rc' in window) {nua('nro',rc)};fq=1;" value="" type="text">-->
-                   <input type="text" id="search" name="asearch" class="span4 search-query input-buscar" placeholder="Buscar">
-                   <!-- <button class="btn btn-sm btn-default" id="search" type="submit"></button>  -->
-                </form>                
-            </div>
-        </div>
-    </div>
-    {% endblock navbar%}
+{% block body %}
       <div class="resultados" align="center">
-
         {% block error %}
         {%if err%}
             <div class="alert alert-error">
@@ -146,5 +115,6 @@
         {% endif %}
      {% endblock %}
      </div>
+{% endblock %}
 </body>
 </html>

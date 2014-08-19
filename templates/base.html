@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+{% block cabezera %}
+        <head>
+            <title>APKStore</title>
+            {% load staticfiles %}
+            <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" type="text/css" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet" type="text/css" />
+            <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" />
+            <link href="{% static "css/font-awesome.css" %}" rel="stylesheet" type="text/css" />
+            <link ilo-full-src=" " rel="shortcut icon" href="/static/favicon.png" type="image/x-icon">
+             <!--<link href="{% static "css/index.css" %}" rel="stylesheet" type="text/css" />-->
+        </head>
+    {% endblock cabezera %}
+
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
+ 	 {% block navbar %}
+         <div class='navbar navbar-inverse navbar-fixed-top'>
+            <div class="navbar-inner">
+                <div class="container" style="align: center;">
+                    <a href="/"> <img src="/static/favicon3.png" alt=""></a>
+                    <form id="fsearch" class="theform navbar-search navbar-form pull-right" method="GET" action="">
+                        {% csrf_token %}
+                       <input type="text" id="search" name="asearch" class="span4 search-query input-buscar" placeholder="Buscar">
+                    </form>
+                </div>
+            </div>
+        </div>
+   {% endblock navbar%}
+   {% block body %}
+   {% endblock %}
+</body>
+</html>

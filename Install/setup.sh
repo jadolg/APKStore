@@ -13,6 +13,8 @@ chmod +x /usr/sbin/filldb
 
 cp -R tmp/APKStore /opt/
 
-echo "iniciando servicio"
-service apkstore start
+sudo update-rc.d -f apkstore start 80 2 3 4 5 . stop 30 0 1 6 .
+#~ echo "iniciando servicio"
+#~ service apkstore start
 echo "instalación finalizada"
+echo "edite /etc/apkstaore.conf para configurar el servicio"

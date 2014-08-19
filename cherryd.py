@@ -125,6 +125,9 @@ class DjangoApplication(object):
         for i in settings.APK_ROOT:
             self.cfg_assets("/apk"+str(c)+"/",i)
             c += 1
+
+        self.cfg_assets("/apk999/",settings.UPLOAD_POOL)
+
         self.cfg_assets(settings.ICONS_URL,settings.ICONS_ROOT)
         self.cfg_favicon(settings.STATIC_ROOT)
         app = WSGIHandler()

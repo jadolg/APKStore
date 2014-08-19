@@ -26,6 +26,7 @@ import ConfigParser
 from pyQR.pyQR import *
 from sys import argv, exit
 from os.path import dirname, exists
+import logging
 
 if exists(os.getcwd()+"/"+dirname(argv[0])):
     BASE_DIR = os.path.abspath(os.getcwd()+"/"+dirname(argv[0]))
@@ -39,7 +40,8 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+     ('Jorge Alberto Díaz Orozco', 'jaorozco@estudiantes.uci.cu'),
+     ('Manuel Alejandro Sánchez del Campo', 'jaorozco@estudiantes.uci.cu'),
 )
 
 MANAGERS = ADMINS
@@ -69,6 +71,7 @@ TIME_ZONE = 'America/Chicago'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
+
 
 SITE_ID = 1
 
@@ -113,10 +116,15 @@ def makeQR(str,path):
 
 
 conf = ConfigParser.RawConfigParser()
-conf_path = '/etc/apkstore.conf'
 
-if not os.path.exists(conf_path):
-    conf_path = BASE_DIR+"/config.conf"
+#Uncomment this ones for deployment
+#conf_path = '/etc/apkstore.conf'
+#if not os.path.exists(conf_path):
+
+conf_path = BASE_DIR+"/config.conf"
+
+logging.basicConfig(filename='apkstore_history.log', format='%(levelname)s: %(message)s', level=logging.DEBUG)
+
 
 if not os.path.exists(BASE_DIR+"/config.conf"):
     conf.add_section('main')
@@ -128,6 +136,7 @@ if not os.path.exists(BASE_DIR+"/config.conf"):
 conf.read(conf_path)
 
 PORT = conf.get("main","port")
+UPLOAD_POOL = conf.get("main","upload pool")
 
 STATIC_ROOT = BASE_DIR+"/static"
 
@@ -137,6 +146,8 @@ makeQR(conf.get("QR","server address"),STATIC_ROOT+'/qr_apk.jpg')
 l = conf.get("main","apk pool").split(",")
 for i in xrange(0,len(l)):
     l[i] = l[i].strip()
+
+l.append(UPLOAD_POOL)
 
 APK_ROOT = l
 

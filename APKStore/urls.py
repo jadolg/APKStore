@@ -32,6 +32,11 @@ urlpatterns = patterns('',
     url(r'^all$', 'APKIndex.views.all', name='all'),
     url(r'^buscar/(.*?)/(\d+)$', 'APKIndex.views.search', name='search'),
     url(r'^adicionales/(\d+)$', 'APKIndex.views.app', name='app'),
+    url(r'^upload/$', 'APKIndex.views.upload', name='upload'),
+
+    url(r'^success/upload/$', 'APKIndex.views.SuccUpload', name='SuccUpload'),
+    url(r'^error/upload/$', 'APKIndex.views.ErrUpload', name='ErrUpload'),
+
 
     # url(r'^APKStore/', include('APKStore.foo.urls')),
 

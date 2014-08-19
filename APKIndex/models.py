@@ -21,6 +21,7 @@
 from django.db import models
 
 class apks(models.Model):
+    sha = models.TextField(max_length=64, primary_key=True)
     nombre = models.CharField(max_length=30)
     icon = models.TextField()
     descripcion = models.TextField()

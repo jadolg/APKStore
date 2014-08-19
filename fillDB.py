@@ -107,6 +107,7 @@ def cleanIcons():
 
 def getData(afile):
     if (os.path.exists(PATH+'/aapt')):
+        print 'here'
         p = subprocess.Popen([PATH+'/aapt','d','badging',afile], stdout=subprocess.PIPE)
     else:
         p = subprocess.Popen(['/opt/APKStore/aapt','d','badging',afile], stdout=subprocess.PIPE)

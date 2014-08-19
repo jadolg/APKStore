@@ -21,9 +21,17 @@
 
 
 from django.db.models import Q
+import random
+from fillDB import getData, extractIcon
 import operator
+import os
+from shutil import copy
+from hashlib import sha256
 
+from django.conf import settings
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'APKStore.settings')
 
+from APKIndex.models import apks
 
 def search_keywords(apks, keywords):
     if isinstance(keywords, str):
@@ -44,4 +52,42 @@ def search_keywords(apks, keywords):
     print final_q
     r_qs = apks.objects.filter(final_q)
     return r_qs
+
+def handle_uploaded_file(afile):
+    path = '/tmp/'+afile.name
+    with open(path, 'wb+') as destination:
+        for chunk in afile.chunks():
+            destination.write(chunk)
+    data = getData(path)
+
+    if data != None:
+        ind = random.randint(999,99999)
+        nombre = data[0][:30]
+
+        icon = extractIcon(path,ind)
+
+        versionName = data[2][:20]
+        version = data[3]
+
+        d = open(path,"rb").read(512)
+        thash = sha256(d)
+        sha =  thash.hexdigest()
+        print sha
+
+        aux = apks.objects.filter(sha=sha)
+
+        if len(aux) > 0:
+            raise Exception('aplicacion duplicada')
+
+        a = apks(sha=sha,nombre=nombre,icon=icon,descripcion="",ruta=data[0]+"_"+str(ind)+"/"+afile.name,versionName=versionName,version=version,pool=999,ind=ind,relativo="")
+        a.save()
+
+        os.mkdir(settings.UPLOAD_POOL+"/"+data[0]+"_"+str(ind))
+        copy(path,settings.UPLOAD_POOL+"/"+data[0]+"_"+str(ind))
+        os.remove(path)
+
+
+
+
+
 

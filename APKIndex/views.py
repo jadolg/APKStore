@@ -25,7 +25,8 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from APKStore.settings import BASE_DIR
+from forms import UploadFileForm
+from utiles.misc_functions import handle_uploaded_file
 
 from models import apks
 from utiles.misc_functions import search_keywords
@@ -69,7 +70,32 @@ def all(request):
 def search(request,keywords,page=1):
     return aresponse(request,keywords=keywords,page=page)
 
-def aresponse(request,id=None,keywords=None,page=None):
+@defbuscar
+def upload(request):
+    c = RequestContext(request)
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                handle_uploaded_file(request.FILES['file'])
+            except:
+                return HttpResponseRedirect('/error/upload/')
+
+        return HttpResponseRedirect('/success/upload/')
+    else:
+        form = UploadFileForm()
+
+    return render_to_response('upload.html', {'err':False,'form': form},context_instance=c)
+
+@defbuscar
+def SuccUpload(request):
+    return aresponse(request,msg="Aplicación almacenada satisfactoriamente")
+
+@defbuscar
+def ErrUpload(request):
+    return aresponse(request,msg="Ocurrió un error mientras se subía o procesaba la aplicación")
+
+def aresponse(request,id=None,keywords=None,page=None,msg=None):
     c = RequestContext(request)
 
     from forms import SearchForm
@@ -111,6 +137,9 @@ def aresponse(request,id=None,keywords=None,page=None):
                 return render_to_response("main.html",{"err":False,"cursor":lapk,"asearch":asearch,"sform":sform},context_instance=c)
             else:
                 return render_to_response("main.html",{"err":True,"msg":"No se han encontrado coincidencias","sform":sform},context_instance=c)
+
+        elif msg != None:
+            return render_to_response("main.html",{"err":True,"msg":msg,"sform":sform},context_instance=c)
         else:
             return render_to_response("index.html",{"err":False,"cursor":[],"sform":sform},context_instance=c)
     else:
