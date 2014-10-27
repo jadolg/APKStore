@@ -80,7 +80,8 @@ def upload(request):
                 handle_uploaded_file(request.FILES['file'])
             except:
                 return HttpResponseRedirect('/error/upload/')
-
+        else:
+            return HttpResponseRedirect('/error/upload/')
         return HttpResponseRedirect('/success/upload/')
     else:
         form = UploadFileForm()
@@ -120,7 +121,7 @@ def aresponse(request,id=None,keywords=None,page=None,msg=None):
                 return render_to_response("main.html",{"err":False,"sform":sform},context_instance=c)
 
             if keywords == "*all*":
-                apk = apks.objects.all()
+                apk = apks.objects.order_by("nombre")
             else:
                 apk = search_keywords(apks,searchp)
 
@@ -144,3 +145,11 @@ def aresponse(request,id=None,keywords=None,page=None,msg=None):
             return render_to_response("index.html",{"err":False,"cursor":[],"sform":sform},context_instance=c)
     else:
         pass
+
+@defbuscar
+def a404_view(request):
+    return aresponse(request,msg="La página solicitada no existe.")
+
+@defbuscar
+def a500_view(request):
+    return aresponse(request,msg="Oooops. Ha ocurrido un error :(")

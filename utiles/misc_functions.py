@@ -22,7 +22,7 @@
 
 from django.db.models import Q
 import random
-from fillDB import getData, extractIcon
+from fillDB import get_data, extract_icon
 import operator
 import os
 from shutil import copy
@@ -50,7 +50,7 @@ def search_keywords(apks, keywords):
 
     final_q = reduce(operator.and_, ns + ps)
     print final_q
-    r_qs = apks.objects.filter(final_q)
+    r_qs = apks.objects.filter(final_q).order_by("nombre")
     return r_qs
 
 def handle_uploaded_file(afile):
@@ -58,13 +58,13 @@ def handle_uploaded_file(afile):
     with open(path, 'wb+') as destination:
         for chunk in afile.chunks():
             destination.write(chunk)
-    data = getData(path)
+    data = get_data(path)
 
     if data != None:
-        ind = random.randint(999,99999)
+        ind = data[3]
         nombre = data[0][:30]
 
-        icon = extractIcon(path,ind)
+        icon = extract_icon(path,ind)
 
         versionName = data[2][:20]
         version = data[3]
@@ -72,7 +72,6 @@ def handle_uploaded_file(afile):
         d = open(path,"rb").read(512)
         thash = sha256(d)
         sha =  thash.hexdigest()
-        print sha
 
         aux = apks.objects.filter(sha=sha)
 
@@ -85,6 +84,8 @@ def handle_uploaded_file(afile):
         os.mkdir(settings.UPLOAD_POOL+"/"+data[0]+"_"+str(ind))
         copy(path,settings.UPLOAD_POOL+"/"+data[0]+"_"+str(ind))
         os.remove(path)
+    else:
+        raise Exception('no se obtuvieron datos')
 
 
 

@@ -158,7 +158,7 @@ if __name__ == '__main__':
         elif argv[1] == 'restart':
             daemon.restart()
         else:
-            Exit('Use: rcserver start|stop|restart')
+            Exit('Use: apkstore start|stop|restart')
     else:
         main(host='0.0.0.0',port=int(settings.PORT))
-        #Exit('Invalid params number\nUse: rcserver start|stop|restart')
+        #Exit('Invalid params number\nUse: apkstore start|stop|restart')

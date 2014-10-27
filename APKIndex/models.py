@@ -31,3 +31,6 @@ class apks(models.Model):
     pool = models.TextField()
     ind = models.IntegerField()
     relativo = models.TextField()
+
+    def __str__(self):
+        return self.nombre+" "+self.version

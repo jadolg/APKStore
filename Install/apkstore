@@ -39,6 +39,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 #
 do_start()
 {
+    echo "Starting the daemon..."
     $DAEMON start
 }
 
@@ -47,6 +48,7 @@ do_start()
 #
 do_stop()
 {
+    echo "Stopping the daemon..."
     $DAEMON stop
 }
 

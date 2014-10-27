@@ -21,11 +21,13 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 
-import os
+
 import ConfigParser
 from pyQR.pyQR import *
 from sys import argv, exit
+import os
 from os.path import dirname, exists
+from os import makedirs
 import logging
 
 if exists(os.getcwd()+"/"+dirname(argv[0])):
@@ -60,7 +62,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -120,7 +122,6 @@ conf = ConfigParser.RawConfigParser()
 #Uncomment this ones for deployment
 #conf_path = '/etc/apkstore.conf'
 #if not os.path.exists(conf_path):
-
 conf_path = BASE_DIR+"/config.conf"
 
 logging.basicConfig(filename='apkstore_history.log', format='%(levelname)s: %(message)s', level=logging.DEBUG)
@@ -137,6 +138,17 @@ conf.read(conf_path)
 
 PORT = conf.get("main","port")
 UPLOAD_POOL = conf.get("main","upload pool")
+TRASHCAN = conf.get("main","trashcan")
+
+
+
+if not exists(UPLOAD_POOL):
+    print UPLOAD_POOL,'not found. Creating it'
+    makedirs(UPLOAD_POOL)
+
+if not exists(TRASHCAN):
+    print TRASHCAN,'not found. Creating it'
+    makedirs(TRASHCAN)
 
 STATIC_ROOT = BASE_DIR+"/static"
 
@@ -147,7 +159,8 @@ l = conf.get("main","apk pool").split(",")
 for i in xrange(0,len(l)):
     l[i] = l[i].strip()
 
-l.append(UPLOAD_POOL)
+if not UPLOAD_POOL in l:
+    l.append(UPLOAD_POOL)
 
 APK_ROOT = l
 
@@ -163,7 +176,8 @@ STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     BASE_DIR+'/templates/css/',
-    BASE_DIR+'/]templates/img/',
+    BASE_DIR+'/templates/img/',
+    BASE_DIR+'/templates/fonts/',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -191,7 +205,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 #    'django.middleware.csrf.CsrfViewMiddleware',
-#    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -210,14 +224,14 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    #'django.contrib.auth',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'APKIndex',

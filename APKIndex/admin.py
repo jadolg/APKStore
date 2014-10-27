@@ -1,1 +1,5 @@
-__author__ = 'akiel'
+from models import *
+
+from django.contrib import admin
+
+admin.site.register(apks)

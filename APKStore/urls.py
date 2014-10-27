@@ -18,13 +18,14 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
-
+handler404 = 'APKIndex.views.a404_view'
+handler500 = 'APKIndex.views.a500_view'
 
 urlpatterns = patterns('',
     # Examples:
@@ -44,5 +45,5 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+     url(r'^admin/', include(admin.site.urls)),
 )
