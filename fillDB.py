@@ -112,8 +112,10 @@ def clean_icons():
 
 
 def get_data(afile):
-    if (os.path.exists(PATH + '/aapt')):
-        p = subprocess.Popen([PATH + '/aapt', 'd', 'badging', afile], stdout=subprocess.PIPE)
+    #~ if (os.path.exists(PATH + '/aapt')):
+    if (os.path.exists('./aapt')):
+        #~ p = subprocess.Popen([PATH + '/aapt', 'd', 'badging', afile], stdout=subprocess.PIPE)
+        p = subprocess.Popen(['./aapt', 'd', 'badging', afile], stdout=subprocess.PIPE)
     else:
         p = subprocess.Popen(['/opt/APKStore/aapt', 'd', 'badging', afile], stdout=subprocess.PIPE)
     out, err = p.communicate()
@@ -167,10 +169,14 @@ def create_db():
         for i in k:
             theAPKdata = get_data(i)
             if theAPKdata:
+                ind += 1
                 ruta = i.replace(POOL[repo_index], "")
 
                 mkl = apks.objects.filter(ruta=ruta)
                 if len(mkl):
+                    if mkl[0].relativo != get_relatives(i):
+                        mkl[0].relativo = get_relatives(i)
+                        mkl[0].save()
                     continue
 
                 nombre = theAPKdata[0][:30]
@@ -179,7 +185,7 @@ def create_db():
                 versionName = theAPKdata[2][:20]
                 version = theAPKdata[3]
 
-                ind += 1
+
                 data = open(i, "rb").read()
                 thash = sha256(data)
                 sha = thash.hexdigest()
@@ -190,8 +196,12 @@ def create_db():
                         move_or_delete(i)
                         print 'aplicacion duplicada', i, 'movida a', settings.TRASHCAN
                     else:
+                        if POOL[repo_index] == POOL[-1]:
+                            tpool = '999'
+                        else:
+                            tpool = str(repo_index)
                         a = apks(sha=sha, nombre=nombre, icon=icon, descripcion="", ruta=i.replace(POOL[repo_index], ""),
-                                 versionName=versionName, version=version, pool=str(repo_index), ind=ind,
+                                 versionName=versionName, version=version, pool=tpool, ind=ind,
                                  relativo=get_relatives(i))
                         a.save()
                 except:
@@ -235,7 +245,11 @@ def clean_and_build_db():
 def update():
     #limpiar la base de datos de registros inexistentes
     for apk in apks.objects.all():
-        if not exists(settings.APK_ROOT[int(apk.pool)] + apk.ruta):
+        if (int(apk.pool) != 999) and not exists(settings.APK_ROOT[int(apk.pool)] + apk.ruta):
+            print 'removing non existing apk for:', apk.nombre
+            apk.delete()
+            
+        if (int(apk.pool) == 999)and not exists(settings.APK_ROOT[int(-1)] + apk.ruta):
             print 'removing non existing apk for:', apk.nombre
             apk.delete()
 
