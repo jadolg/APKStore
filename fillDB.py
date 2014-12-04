@@ -157,7 +157,6 @@ def extract_icon(aapk, ind):
 
 
 def create_db():
-    ind = 0
     repo_index = 0
     amm = 0
     lapk = list_apks()
@@ -169,21 +168,22 @@ def create_db():
         for i in k:
             theAPKdata = get_data(i)
             if theAPKdata:
-                ind += 1
                 ruta = i.replace(POOL[repo_index], "")
 
                 mkl = apks.objects.filter(ruta=ruta)
                 if len(mkl):
                     if mkl[0].relativo != get_relatives(i):
+                        print 'cambiando relativos para',mkl[0].nombre
                         mkl[0].relativo = get_relatives(i)
                         mkl[0].save()
                     continue
 
                 nombre = theAPKdata[0][:30]
-                icon = extract_icon(i, ind)
+                version = theAPKdata[3]
+                icon = extract_icon(i, version)
 
                 versionName = theAPKdata[2][:20]
-                version = theAPKdata[3]
+
 
 
                 data = open(i, "rb").read()
@@ -201,7 +201,7 @@ def create_db():
                         else:
                             tpool = str(repo_index)
                         a = apks(sha=sha, nombre=nombre, icon=icon, descripcion="", ruta=i.replace(POOL[repo_index], ""),
-                                 versionName=versionName, version=version, pool=tpool, ind=ind,
+                                 versionName=versionName, version=version, pool=tpool,
                                  relativo=get_relatives(i))
                         a.save()
                 except:
@@ -212,7 +212,7 @@ def create_db():
                 print "No se puede obtener los datos de: " + i + ' movida a ' + settings.TRASHCAN
                 move_or_delete(i)
 
-            print ">> " + str(ind) + '/' + str(amm)
+            #print ">> " + str(ind) + '/' + str(amm)
         repo_index += 1
 
 def move_or_delete(i):

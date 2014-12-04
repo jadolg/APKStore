@@ -29,7 +29,6 @@ class apks(models.Model):
     versionName = models.CharField(max_length=20)
     version = models.TextField()
     pool = models.TextField()
-    ind = models.IntegerField()
     relativo = models.TextField()
 
     def __str__(self):

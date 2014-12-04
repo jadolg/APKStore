@@ -25,4 +25,4 @@ class SearchForm(forms.Form):
 
 class UploadFileForm(forms.Form):
     apk  = forms.FileField()
-    #sd  = forms.FileField()
+    adicional  = forms.FileField(required=False)

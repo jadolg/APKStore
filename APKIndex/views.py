@@ -24,6 +24,7 @@ from django.http.response import HttpResponseRedirect
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from samba.dcerpc.nbt import name
 
 from forms import UploadFileForm
 from utiles.misc_functions import handle_uploaded_file
@@ -59,8 +60,8 @@ def main(request):
     return aresponse(request)
 
 @defbuscar
-def app(request,id):
-    return aresponse(request,id)
+def app(request,name,id):
+    return aresponse(request,keywords=name,id = id)
 
 @defbuscar
 def all(request):
@@ -76,7 +77,10 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            code = handle_uploaded_file(request.FILES['file'])
+            if 'adicional' in request.FILES:
+                code = handle_uploaded_file(request.FILES['apk'],request.FILES['adicional'])
+            else:
+                code = handle_uploaded_file(request.FILES['apk'])
             if code == 0 :
                 return HttpResponseRedirect('/success/upload/')
             elif code == 1:
@@ -84,7 +88,8 @@ def upload(request):
             elif code == 2:
                 return HttpResponseRedirect('/error/upload/')
         else:
-            return HttpResponseRedirect('/error/upload/')
+            pass
+            #return HttpResponseRedirect('/error/upload/')
 
     else:
         form = UploadFileForm()
@@ -111,7 +116,7 @@ def aresponse(request,id=None,keywords=None,page=None,msg=None):
 
     if request.method == 'GET':
         if id:
-            apk = apks.objects.get(ind=id)
+            apk = apks.objects.get(version=id, nombre=keywords)
 
             rel = apk.relativo.split(":")
             if len(rel)>0:

@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     url(r'^$', 'APKIndex.views.main', name='main'),
     url(r'^all$', 'APKIndex.views.all', name='all'),
     url(r'^buscar/(.*?)/(\d+)$', 'APKIndex.views.search', name='search'),
-    url(r'^adicionales/(\d+)$', 'APKIndex.views.app', name='app'),
+    url(r'^adicionales/(.*?)/(\d+)$', 'APKIndex.views.app', name='app'),
     url(r'^upload/$', 'APKIndex.views.upload', name='upload'),
 
     url(r'^success/upload/$', 'APKIndex.views.SuccUpload', name='SuccUpload'),
