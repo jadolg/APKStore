@@ -76,13 +76,16 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            try:
-                handle_uploaded_file(request.FILES['file'])
-            except:
+            code = handle_uploaded_file(request.FILES['file'])
+            if code == 0 :
+                return HttpResponseRedirect('/success/upload/')
+            elif code == 1:
+                return HttpResponseRedirect('/error/duplicated/')
+            elif code == 2:
                 return HttpResponseRedirect('/error/upload/')
         else:
             return HttpResponseRedirect('/error/upload/')
-        return HttpResponseRedirect('/success/upload/')
+
     else:
         form = UploadFileForm()
 
@@ -95,6 +98,10 @@ def SuccUpload(request):
 @defbuscar
 def ErrUpload(request):
     return aresponse(request,msg="Ocurrió un error mientras se subía o procesaba la aplicación")
+
+@defbuscar
+def DupUpload(request):
+    return aresponse(request,msg="Ya tenemos esta aplicación. Gracias por compartir ;)")
 
 def aresponse(request,id=None,keywords=None,page=None,msg=None):
     c = RequestContext(request)

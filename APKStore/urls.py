@@ -37,7 +37,7 @@ urlpatterns = patterns('',
 
     url(r'^success/upload/$', 'APKIndex.views.SuccUpload', name='SuccUpload'),
     url(r'^error/upload/$', 'APKIndex.views.ErrUpload', name='ErrUpload'),
-
+    url(r'^error/duplicated/$', 'APKIndex.views.DupUpload', name='DupUpload'),
 
     # url(r'^APKStore/', include('APKStore.foo.urls')),
 
